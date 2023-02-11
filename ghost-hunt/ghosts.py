@@ -1,3 +1,4 @@
+import os
 import openai
 from random import randint
 
@@ -262,6 +263,11 @@ occupations = [
 youngest_age = 18
 oldest_age = 99
 
+# Requires {name}, {last_name}, {age}, {occupation}
+prompt = "Write ~100 word backstory about {name}, \
+        who was {age} years old when they died, and was a {occupation}. \
+        Now they are a vengeful ghost."
+
 def getRandomFirstName():
     return first_names[randint(0,len(first_names)-1)]
 
@@ -274,21 +280,18 @@ def getRandomAge():
 def getRandomOccupation():
     return occupations[randint(0,len(occupations)-1)]
 
-def getRandomBackstory():
-    openai.api_key = "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"
+def getBackstory(first_name, last_name, age, occupation):
+    openai.api_key = os.getenv("OPENAI_API_KEY")
     response = openai.Completion.create(
         model="text-davinci-003",
-        prompt="Write ~100 word backstory about the ghost {0}, \
-            who is {1} years old, and was a {2}. \
-            Also specify how they died.".format(
-                getRandomFirstName() + " " + getRandomLastName(),
-                getRandomAge(),
-                getRandomOccupation()
-            ),
+        prompt=prompt.format(
+            name = first_name + " " + last_name,
+            age = age,
+            occupation = occupation
+        ),
         temperature=0.6,
         stream=False,
         max_tokens=1024
     )
-    print(response.choices[0].text)
 
-getRandomBackstory()
+    return response.choices[0].text
