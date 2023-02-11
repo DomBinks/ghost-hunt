@@ -8,19 +8,15 @@
 
 #define GHOST_TYPE_LEN 32
 #define GHOST_NAME_LEN 32
-<<<<<<< HEAD
 
 #define PICO_I2C_SDA 20
 #define PICO_I2C_SCL 21
-=======
 #define rxPin 0
 #define txPin 15
 #define sevseg 12
 #define buzzer 13
-String location;
 
 SoftwareSerial mySerial =  SoftwareSerial(rxPin, txPin);
-
 
 MPU6050 accelgyro;
 String location;
@@ -39,6 +35,7 @@ Ghost getGhostFromServer();
 void waitForMovement();
 String getLocation();
 unsigned long timeSince(unsigned long);
+void ghostEffects(Ghost);
 
 
 void setup(){
@@ -94,32 +91,32 @@ void loop(){
     digitalWrite(sevseg,LOW);
     digitalWrite(buzzer,LOW);
     delay(500);
-    if(location == ghost.location)
+    if(location[0] == ghost.location)
     {
       //we're in the ghosts area do spooky things 
       delay(500); //wait some time
       intensity += 0.5;
       ghostEffects(ghost);
     }
-  }
 
+  accelgyro.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
   //Serial.print("Current Location: ");
   //Serial.println(getLocation());
   Serial.print("a/g:\t");
-        Serial.print(ax); Serial.print("\t");
-        Serial.print(ay); Serial.print("\t");
-        Serial.print(az); Serial.print("\t");
-        Serial.print(gx); Serial.print("\t");
-        Serial.print(gy); Serial.print("\t");
-        Serial.println(gz);
+  Serial.print(ax); Serial.print("\t");
+  Serial.print(ay); Serial.print("\t");
+  Serial.print(az); Serial.print("\t");
+  Serial.print(gx); Serial.print("\t");
+  Serial.print(gy); Serial.print("\t");
+  Serial.println(gz);
   delay(500);
+  }
 
 }
 
 void ghostEffects(Ghost ghost)
 {
-    
->>>>>>> 164038de25b31d56f0286c8c72efbf99d1afed7d
+    return;
 }
 
 void loop1(){
