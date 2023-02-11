@@ -1,6 +1,13 @@
 #include <Arduino.h>
 #include "LocationFinder.h"
 #include <SoftwareSerial.h>
+
+#include <Adafruit_MPU6050.h>
+#include <Adafruit_Sensor.h>
+#include <MPU6050.h>
+#include <Wire.h>
+#include <LocationFinder.h>
+
 #define GHOST_TYPE_LEN 32
 #define GHOST_NAME_LEN 32
 #define rxPin 0
@@ -10,6 +17,7 @@
 String location;
 
 SoftwareSerial mySerial =  SoftwareSerial(rxPin, txPin);
+Adafruit_MPU6050 mpu;
 
 struct Ghost {
     char type[GHOST_TYPE_LEN];
@@ -22,20 +30,28 @@ struct Ghost {
 Ghost getGhostFromServer();
 void waitForMovement();
 String getLocation();
+unsigned long timeSince(unsigned long);
 
 
 void setup(){
-  Serial.begin(9600);
   pinMode(txPin, OUTPUT);
   mySerial.begin(9600);
   pinMode(sevseg,OUTPUT);
   pinMode(buzzer,OUTPUT);
+  Serial.begin(115200);
+  while (!Serial)
+    delay(3); // will 
+  // Try to initialize!
+  while (!mpu.begin()) {
+    Serial.println("Failed to find MPU6050 chip");
+    delay(3);
+  }
 }
 
 void setup1(){
 
 }
-
+float intensity = 0;
 void loop(){
   Ghost ghost = getGhostFromServer();
   waitForMovement();
@@ -64,13 +80,13 @@ void loop(){
     digitalWrite(sevseg,LOW);
     digitalWrite(buzzer,LOW);
     delay(500);
-    //if(location == ghost.location)
-    //{
+    if(location == ghost.location)
+    {
       //we're in the ghosts area do spooky things 
-//      delay(500); //wait some time
-
-  //    ghostEffects(ghost);
-   // }
+      delay(500); //wait some time
+      intensity += 0.5;
+      ghostEffects(ghost);
+    }
   }
 }
 
@@ -94,11 +110,21 @@ Ghost getGhostFromServer(){
 
 // use the MPU-6050 accelerometer breakout board to detect movement
 void waitForMovement(){
-  
+  // gets time in ms since program started 
+  unsigned long startTime = millis();
+  bool not_moved = true;
+  while (not_moved && timeSince(startTime) < 30000) {
+    // check if moved
+  }
+
 }
 
 // get the current relative location from the wifi scanning stuff.
 WifiScanner s;
 String getLocation() {
   return positioning.predictRoomName(s);
+}
+
+unsigned long timeSince(unsigned long start_time){
+  return millis() - start_time;
 }

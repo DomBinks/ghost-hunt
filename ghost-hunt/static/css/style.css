@@ -35,7 +35,7 @@ body {
     transform: rotate(-95deg);
     }
     
-    button.locate-ghost {
+    button.scan-ghost {
     background-color: #fff;
     color: #333;
     border: none;
@@ -50,7 +50,7 @@ body {
     text-align: center;
     }
     
-    button.locate-ghost:hover {
+    button.scan-ghost:hover {
     background-color: #333;
     color: #fff;
     }

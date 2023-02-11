@@ -8,9 +8,16 @@ app = Flask(__name__)
 def index_page():
     return render_template("index.html")
 
-@app.route('/hunt')
-def hunt_page():
-    return render_template("hunt.html", methods=['POST'])
+@app.route('/scan')
+def scan_page():
+    first_name = getRandomFirstName()
+    last_name = getRandomLastName()
+    name = first_name + " " + last_name
+    age = getRandomAge()
+    occupation = getRandomOccupation()
+    backstory = getBackstory(first_name, last_name, age, occupation)
+    return render_template("scan.html", name=name, age=age,
+                           occupation=occupation, backstory=backstory)
 
 @app.route('/test')
 def test_page():
