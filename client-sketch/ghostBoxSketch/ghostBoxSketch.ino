@@ -1,22 +1,25 @@
 #include <Arduino.h>
 
-#include <Adafruit_MPU6050.h>
-#include <Adafruit_Sensor.h>
-#include <MPU6050.h>
 #include <Wire.h>
-#include <LocationFinder.h>
+#include "LocationFinder.h"
+#include <MPU6050.h>
 
 #define GHOST_TYPE_LEN 32
 #define GHOST_NAME_LEN 32
 
-String location;
-Adafruit_MPU6050 mpu;
+#define PICO_I2C_SDA 20
+#define PICO_I2C_SCL 21
 
-struct Ghost {
+MPU6050 accelgyro;
+String location;
+int16_t ax, ay, az;
+int16_t gx, gy, gz;
+
+typedef struct Ghost {
     char type[GHOST_TYPE_LEN];
     char name[GHOST_NAME_LEN];
     uint8_t activeness;
-};
+} Ghost;
 
 // Function definitions
 Ghost getGhostFromServer();
@@ -26,14 +29,19 @@ unsigned long timeSince(unsigned long);
 
 
 void setup(){
-  Serial.begin(115200);
+  Serial.begin(9600);
   while (!Serial)
     delay(3); // will 
-  // Try to initialize!
-  while (!mpu.begin()) {
-    Serial.println("Failed to find MPU6050 chip");
-    delay(3);
-  }
+  Serial.println("test");
+  
+
+  Wire.begin();
+  //Wire.setSCL(PICO_I2C_SCL);
+  //Wire.setSDA(PICO_I2C_SDA);
+  
+  accelgyro.initialize();
+  Serial.println(accelgyro.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
+
 }
 
 void setup1(){
@@ -48,12 +56,20 @@ void loop(){
     location = getLocation();
   }
   */
-  Serial.print("Current Location: ");
-  Serial.println(getLocation());
+  //Serial.print("Current Location: ");
+  //Serial.println(getLocation());
+  Serial.print("a/g:\t");
+        Serial.print(ax); Serial.print("\t");
+        Serial.print(ay); Serial.print("\t");
+        Serial.print(az); Serial.print("\t");
+        Serial.print(gx); Serial.print("\t");
+        Serial.print(gy); Serial.print("\t");
+        Serial.println(gz);
+  delay(500);
 }
 
 void loop1(){
-
+  
 }
 
 // Blocking function that waits to recieve a "ghost" from the server.
