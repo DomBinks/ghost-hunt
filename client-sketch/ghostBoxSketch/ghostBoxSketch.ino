@@ -1,4 +1,6 @@
 #include <Arduino.h>
+#include "LocationFinder.h"
+#include <SoftwareSerial.h>
 
 #include <Wire.h>
 #include "LocationFinder.h"
@@ -6,9 +8,19 @@
 
 #define GHOST_TYPE_LEN 32
 #define GHOST_NAME_LEN 32
+<<<<<<< HEAD
 
 #define PICO_I2C_SDA 20
 #define PICO_I2C_SCL 21
+=======
+#define rxPin 0
+#define txPin 15
+#define sevseg 12
+#define buzzer 13
+String location;
+
+SoftwareSerial mySerial =  SoftwareSerial(rxPin, txPin);
+
 
 MPU6050 accelgyro;
 String location;
@@ -18,6 +30,7 @@ int16_t gx, gy, gz;
 typedef struct Ghost {
     char type[GHOST_TYPE_LEN];
     char name[GHOST_NAME_LEN];
+    char location; //the room the ghost is in
     uint8_t activeness;
 } Ghost;
 
@@ -29,7 +42,12 @@ unsigned long timeSince(unsigned long);
 
 
 void setup(){
-  Serial.begin(9600);
+  pinMode(txPin, OUTPUT);
+  mySerial.begin(9600);
+  pinMode(sevseg,OUTPUT);
+  pinMode(buzzer,OUTPUT);
+  Serial.begin(115200);
+
   while (!Serial)
     delay(3); // will 
   Serial.println("test");
@@ -47,15 +65,44 @@ void setup(){
 void setup1(){
 
 }
-
+float intensity = 0;
 void loop(){
-/*  getGhostFromServer();
+  Ghost ghost = getGhostFromServer();
   waitForMovement();
-  bool found;
+  bool found = false;
   while (!found){
+    delay(500);
+    //digitalWrite(15,HIGH);
+    uint8_t t1 = 0x02;
+    uint8_t t2 = 0x01;
+
+    //digitalWrite(15,LOW);
     location = getLocation();
+    digitalWrite(buzzer,HIGH);
+    mySerial.write((uint8_t)0);
+    digitalWrite(buzzer,LOW);
+    
+    digitalWrite(sevseg,HIGH);
+    
+    for(int i = 0; i<255; i++)
+    {
+      delay(250);
+      mySerial.write(i);
+      delay(250);
+    }
+    
+    digitalWrite(sevseg,LOW);
+    digitalWrite(buzzer,LOW);
+    delay(500);
+    if(location == ghost.location)
+    {
+      //we're in the ghosts area do spooky things 
+      delay(500); //wait some time
+      intensity += 0.5;
+      ghostEffects(ghost);
+    }
   }
-  */
+
   //Serial.print("Current Location: ");
   //Serial.println(getLocation());
   Serial.print("a/g:\t");
@@ -66,6 +113,13 @@ void loop(){
         Serial.print(gy); Serial.print("\t");
         Serial.println(gz);
   delay(500);
+
+}
+
+void ghostEffects(Ghost ghost)
+{
+    
+>>>>>>> 164038de25b31d56f0286c8c72efbf99d1afed7d
 }
 
 void loop1(){
