@@ -1,16 +1,10 @@
 #include <Arduino.h>
-
-#include <Adafruit_MPU6050.h>
-#include <Adafruit_Sensor.h>
-#include <MPU6050.h>
-#include <Wire.h>
-#include <LocationFinder.h>
-
+#include "LocationFinder.h"
 #define GHOST_TYPE_LEN 32
 #define GHOST_NAME_LEN 32
 
 String location;
-Adafruit_MPU6050 mpu;
+
 
 struct Ghost {
     char type[GHOST_TYPE_LEN];
@@ -22,18 +16,10 @@ struct Ghost {
 Ghost getGhostFromServer();
 void waitForMovement();
 String getLocation();
-unsigned long timeSince(unsigned long);
 
 
 void setup(){
-  Serial.begin(115200);
-  while (!Serial)
-    delay(3); // will 
-  // Try to initialize!
-  while (!mpu.begin()) {
-    Serial.println("Failed to find MPU6050 chip");
-    delay(3);
-  }
+  Serial.begin(9600);
 }
 
 void setup1(){
@@ -67,21 +53,11 @@ Ghost getGhostFromServer(){
 
 // use the MPU-6050 accelerometer breakout board to detect movement
 void waitForMovement(){
-  // gets time in ms since program started 
-  unsigned long startTime = millis();
-  bool not_moved = true;
-  while (not_moved && timeSince(startTime) < 30000) {
-    // check if moved
-  }
-
+  
 }
 
 // get the current relative location from the wifi scanning stuff.
 WifiScanner s;
 String getLocation() {
   return positioning.predictRoomName(s);
-}
-
-unsigned long timeSince(unsigned long start_time){
-  return millis() - start_time;
 }
