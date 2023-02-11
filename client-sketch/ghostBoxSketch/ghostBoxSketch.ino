@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <LocationFinder.h>
+#include "LocationFinder.h"
 #define GHOST_TYPE_LEN 32
 #define GHOST_NAME_LEN 32
 
