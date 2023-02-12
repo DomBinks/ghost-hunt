@@ -291,22 +291,32 @@ def getType():
     return random.choice(ghost_types)
 
 def getPortrait(first_name, last_name, age):
-    openai.api_key = os.getenv("OPENAI_API_KEY")
-    response = openai.Image.create(
-        prompt = f"{first_name} {last_name}, {age} years old, portrait in the style of Grant Wood"
-    )
+    pass
+    try:
+        openai.api_key = os.getenv("OPENAI_API_KEY")
+        response = openai.Image.create(
+            prompt = f"{first_name} {last_name}, {age} years old, portrait in the style of Grant Wood"
+        )
+    except:
+        return
+        
 def getBackstory(first_name, last_name, age, occupation):
-    openai.api_key = os.getenv("OPENAI_API_KEY")
-    response = openai.Completion.create(
-        model="text-davinci-003",
-        prompt=prompt.format(
-            name = first_name + " " + last_name,
-            age = age,
-            occupation = occupation
-        ),
-        temperature=0.6,
-        stream=False,
-        max_tokens=1024
-    )
+    pass
+    try:
+        openai.api_key = os.getenv("OPENAI_API_KEY")
+        response = openai.Completion.create(
+            model="text-davinci-003",
+            prompt=prompt.format(
+                name = first_name + " " + last_name,
+                age = age,
+                occupation = occupation
+            ),
+            temperature=0.6,
+            stream=False,
+            max_tokens=1024
+        )
 
-    return response.choices[0].text
+        return response.choices[0].text
+
+    except:
+        return
