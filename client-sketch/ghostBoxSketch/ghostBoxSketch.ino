@@ -21,13 +21,10 @@
 #define led2 10
 #define led3 11
 
-SoftwareSerial mySerial =  SoftwareSerial(rxPin, txPin);
 Servo servo;
 SoftwareSerial mySerial = SoftwareSerial(rxPin, txPin);
 
 String location;
-int16_t ax, ay, az;
-int16_t gx, gy, gz;
 
 
 // Function definitions
@@ -68,12 +65,7 @@ void setup(){
   Serial.println("test");
   
 
-  //Wire.begin();
-  //Wire.setSCL(PICO_I2C_SCL);
-  //Wire.setSDA(PICO_I2C_SDA);
   
-  accelgyro.initialize();
-  Serial.println(accelgyro.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
   
   setSevenSeg(10);
   setBuzzer(0);
@@ -89,8 +81,10 @@ void setup1(){
 }
 
 float intensity = 0;
+Ghost ghost;
 void loop(){
-  Ghost ghost = getGhostFromServer();
+  ghost = getGhostFromServer();
+  ghost = getGhostFromServer();
   waitForMovement();
   bool found = false;
   while (!found){
@@ -142,11 +136,11 @@ void loop1(){
 // Blocking function that waits to recieve a "ghost" from the server.
 // returns a struct containing the ghost type and any other location 
 Ghost getGhostFromServer(){
-    Ghost ghost;
+    Ghost ghost = {"", "", 0, 0};
     // do some logic for actually getting a ghost
   
     while (ghost.name != "") {
-      Serial.println("test");
+      Serial.println(ghost.name);
       ghost = handleClient();
     }
     Serial.println("##############################################################################");
