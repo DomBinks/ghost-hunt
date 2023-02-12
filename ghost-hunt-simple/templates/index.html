@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Ghost Hunt</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+  </head>
+  <body>
+    <header>
+      <h1>Ghost Hunt</h1> 
+      <!-- This is very silly and wacky. 
+      The CCS does the funny and flips this for some reason -->
+    </header>
+    <main>
+      <form action="{{ url_for('scan_page') }}" method="get">
+        <button class="scan-ghost" type="submit">Scan for a Ghost</button>
+      </form>
+    </main>
+  </body>
+</html>
