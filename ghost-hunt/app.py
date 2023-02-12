@@ -15,7 +15,7 @@ ghostBackstory = ghosts.getBackstory(ghostFName,ghostSName,ghosts.getRandomAge,g
 @app.route('/')
 def index_page():
     
-    return render_template("ghostTerminal.html", ghostFName=ghostFName, ghostSName=ghostSName, suggestedLocation=suggestedLocation, ghostActivity=ghostActivity)
+    return render_template("ghostTerminal.html", ghostFName=ghostFName, ghostSName=ghostSName, suggestedLocation=suggestedLocation, ghostActivity=ghostActivity, ghostActivity=ghostActivity, )
 
 @app.route("/", methods=["POST"])
 def parseString():
