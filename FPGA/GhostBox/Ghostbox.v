@@ -26,7 +26,7 @@ reg [7:0]r_sevseg_num = 0;
 clickingNoise CLICKER_INST(
 	i_clk,
 	o_buzzer,
-	r_buzz_freq,
+	r_buzz_freq
 );
 
 UARTrx UARTRX_INST
@@ -34,7 +34,7 @@ UARTrx UARTRX_INST
 	i_clk,
 	i_uart_serial,
 	uartDone,
-	w_UARTrx,
+	w_UARTrx
 );
 
 SEVEN_SEG SEV_SEG_INST
@@ -44,7 +44,7 @@ SEVEN_SEG SEV_SEG_INST
 	o_sel10,
 	o_sel100,
 	o_sevseg,
-	r_sevseg_num,
+	r_sevseg_num
 );
 always @(posedge i_clk) begin
 //if(uartDone) r_sevseg_num <= ~w_UARTrx;
