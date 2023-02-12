@@ -1,13 +1,12 @@
 #include <Arduino.h>
 #include "LocationFinder.h"
 #include <SoftwareSerial.h>
-
 #include <Wire.h>
 #include "LocationFinder.h"
 #include <MPU6050.h>
+#include "Ghost.h"
+#include "WiFiJSONServer.h"
 
-#define GHOST_TYPE_LEN 32
-#define GHOST_NAME_LEN 32
 
 #define PICO_I2C_SDA 20
 #define PICO_I2C_SCL 21
@@ -16,19 +15,13 @@
 #define sevseg 12
 #define buzzer 13
 
-SoftwareSerial mySerial =  SoftwareSerial(rxPin, txPin);
+SoftwareSerial mySerial = SoftwareSerial(rxPin, txPin);
 
 MPU6050 accelgyro;
 String location;
 int16_t ax, ay, az;
 int16_t gx, gy, gz;
 
-typedef struct Ghost {
-    char type[GHOST_TYPE_LEN];
-    char name[GHOST_NAME_LEN];
-    char location; //the room the ghost is in
-    uint8_t activeness;
-} Ghost;
 
 // Function definitions
 Ghost getGhostFromServer();
