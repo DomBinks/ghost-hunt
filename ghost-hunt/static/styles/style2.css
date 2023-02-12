@@ -31,11 +31,12 @@ body {
     width: 100%;
     position: absolute;
     top: 0;
-    left: 0;
+    left: 0;selectionStart
     text-align: center;
+    color: #333;
     font: 1.3rem Inconsolata, monospace;
     font-weight: bold;
-    color: #333;
+    text-shadow: 0 0 5px #525252;
     }
     
     .header-text {
@@ -81,7 +82,7 @@ body {
     }
     
     .input-section {
-    
+    text-align: left;
     bottom: 2rem;
     width: 100%;
     left: 0%;
@@ -92,9 +93,14 @@ body {
     background: transparent;
     border: transparent;
     outline: transparent;
+    font-size: 1.3rem;
     color: #fff;
     font: 1.3rem Inconsolata, monospace;
     text-shadow: 0 0 5px #C8C8C8;
+    }
+
+    .input-field {
+      font-size: 1.3rem;
     }
     
     .input-section button {
@@ -109,10 +115,6 @@ body {
     cursor: pointer;
     }
     
-    .terminal-prompt {
-      left: 0%;
-    }
-
     .asciiArt {
         font-family: monospace;
         white-space: pre;
