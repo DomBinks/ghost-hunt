@@ -4,10 +4,7 @@
 
 #include <Wire.h>
 #include "LocationFinder.h"
-<<<<<<< HEAD
-=======
 #include <MPU6050.h>
->>>>>>> cc6a2d9b7108dd32d36d77d72b85f2281a793531
 
 #define GHOST_TYPE_LEN 32
 #define GHOST_NAME_LEN 32
@@ -52,13 +49,11 @@ void setup(){
 
   while (!Serial)
     delay(3); // will 
-<<<<<<< HEAD
   // Try to initialize!
   //while (!mpu.begin()) {
   //  Serial.println("Failed to find MPU6050 chip");
   //  delay(3);
   //}
-=======
   Serial.println("test");
   
 
@@ -69,7 +64,6 @@ void setup(){
   accelgyro.initialize();
   Serial.println(accelgyro.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
 
->>>>>>> cc6a2d9b7108dd32d36d77d72b85f2281a793531
 }
 
 void setup1(){
