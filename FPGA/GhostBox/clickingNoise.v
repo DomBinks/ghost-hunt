@@ -46,7 +46,7 @@ end
 
 //always @(posedge offPulse) s <= 1;
 
-assign offPulse = (r_counter == 240000); //pulses when counter == 30000
+assign offPulse = (r_counter == 30000); //pulses when counter == 30000
 
 
  

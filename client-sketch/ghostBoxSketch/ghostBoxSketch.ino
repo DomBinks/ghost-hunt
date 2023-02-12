@@ -36,10 +36,17 @@ void setup(){
   mySerial.begin(9600);
   pinMode(sevseg,OUTPUT);
   pinMode(buzzer,OUTPUT);
+  digitalWrite(buzzer,LOW);
+  digitalWrite(sevseg,LOW);
   Serial.begin(115200);
 
   while (!Serial)
     delay(3); // will 
+  // Try to initialize!
+  //while (!mpu.begin()) {
+  //  Serial.println("Failed to find MPU6050 chip");
+  //  delay(3);
+  //}
   Serial.println("test");
   
 
@@ -61,33 +68,11 @@ void loop(){
   waitForMovement();
   bool found = false;
   while (!found){
-    delay(500);
-    //digitalWrite(15,HIGH);
-    uint8_t t1 = 0x02;
-    uint8_t t2 = 0x01;
-
-    //digitalWrite(15,LOW);
     location = getLocation();
-    digitalWrite(buzzer,HIGH);
-    mySerial.write((uint8_t)0);
-    digitalWrite(buzzer,LOW);
-    
-    digitalWrite(sevseg,HIGH);
-    
-    for(int i = 0; i<255; i++)
-    {
-      delay(250);
-      mySerial.write(i);
-      delay(250);
-    }
-    
-    digitalWrite(sevseg,LOW);
-    digitalWrite(buzzer,LOW);
-    delay(500);
     if(location[0] == ghost.location)
     {
       //we're in the ghosts area do spooky things 
-      delay(500); //wait some time
+      //delay(500); //wait some time
       intensity += 0.5;
       ghostEffects(ghost);
     }
@@ -105,6 +90,25 @@ void loop(){
   delay(500);
   }
 
+}
+///sets the 7 segment display
+///
+void setSevenSeg(uint8_t i)
+{
+  digitalWrite(sevseg, HIGH);
+  delay(10);
+      mySerial.write(i);
+  delay(10);
+  digitalWrite(sevseg, LOW);
+}
+
+void setBuzzer(uint8_t i)
+{
+  digitalWrite(buzzer, HIGH);
+  delay(10);
+      mySerial.write(i);
+  delay(10);
+  digitalWrite(buzzer, LOW);
 }
 
 void ghostEffects(Ghost ghost)
