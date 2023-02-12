@@ -1,0 +1,144 @@
+body {
+    background-color: #333;
+    
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    padding: 2rem;
+    color: #fff;
+    font: 1.3rem Inconsolata, monospace;
+    text-shadow: 0 0 5px #C8C8C8;
+    }
+    
+    .terminal-window {
+    background-color: #333;
+    background-image: radial-gradient(
+    rgba(0, 150, 0, 0.75), #333 120%
+    );
+    height: 60vh;
+    width: 40%;
+    position: absolute;
+    top: 5%;
+    right: 2rem;
+    border: 1px solid #999;
+    padding: 2rem;
+    overflow: auto;
+    }
+    
+    .terminal-header {
+    background-color: #999;
+    height: 2rem;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;selectionStart
+    text-align: center;
+    color: #333;
+    font: 1.3rem Inconsolata, monospace;
+    font-weight: bold;
+    text-shadow: 0 0 5px #525252;
+    }
+    
+    .header-text {
+    margin: 0;
+    }
+    
+    .header-icons {
+    position: absolute;
+    right: 2rem;
+    display: flex;
+    }
+    
+    .header-icon {
+    background-color: #f00;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    margin-right: 1rem;
+    }
+    
+    .red-circle {
+    background-color: #f00;
+    }
+    
+    .green-circle {
+    background-color: #0f0;
+    }
+    
+    .orange-circle {
+    background-color: #ffa500;
+    }
+    
+    .terminal-body {
+    height: 100%;
+    width: 100%;
+    padding: 2rem;
+    color: #fff;
+    font-size: .8rem;
+    }
+    
+    .image-section img {
+    max-width: 100%;
+    }
+    
+    .input-section {
+    text-align: left;
+    bottom: 2rem;
+    width: 100%;
+    left: 0%;
+    }
+        
+    .input-section input {
+    width: 100%;
+    background: transparent;
+    border: transparent;
+    outline: transparent;
+    font-size: 1.3rem;
+    color: #fff;
+    font: 1.3rem Inconsolata, monospace;
+    text-shadow: 0 0 5px #C8C8C8;
+    }
+
+    .input-field {
+      font-size: 1.3rem;
+    }
+    
+    .input-section button {
+    background-color: #f00;
+    color: #fff;
+    border: 0;
+    border-radius: 5px;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    font: 1.3rem Inconsolata, monospace;
+    text-shadow: 0 0 5px #C8C8C8;
+    cursor: pointer;
+    }
+    
+    .asciiArt {
+        font-family: monospace;
+        white-space: pre;
+    }
+    
+    #cursor {
+        background: #fff;
+        box-shadow: 0 0 5px #C8C8C8;
+        line-height: 17px;
+        margin-left: 3px;
+        animation: blink 2.15s infinite;
+        width: 7px;
+        height: 1.5rem;
+      }
+      
+      @keyframes blink {
+        0% {box-shadow: 0 0 5px transparent;}
+        0% {background: transparent}
+        10% {background: transparent}
+        10% {box-shadow: 0 0 5px transparent;}
+        50% {background: #fff}
+        50% {box-shadow: 0 0 5px #C8C8C8;}
+        90% {background: transparent}
+        90% {box-shadow: 0 0 5px transparent;}
+        100% {box-shadow: 0 0 5px transparent;}
+        100% {background: transparent}
+      }

@@ -1,0 +1,56 @@
+#terminal {
+    width: 40%;
+    height: 90%;
+    position: fixed;
+    right: 2%;
+    top: 0;
+    bottom: 0;
+    overflow-y: scroll;
+    background-color: #333;
+    color: #fff;
+    font-family: monospace;
+    font-size: 14px;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  
+  #output {
+    height: 100%;
+    width: 100%;
+    overflow-y: scroll;
+  }
+  
+  #input {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    height: 10%;
+    width: 100%;
+    padding-top: 10px;
+    box-sizing: border-box;
+  }
+  
+  #terminal-output {
+    height: 100%;
+    width: 100%;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    padding-top: 10px;
+  }
+  
+  #terminal-input {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  
+  #command-line {
+    width: 90%;
+    padding: 5px;
+    font-family: monospace;
+    font-size: 14px;
+    border: none;
+    background-color: #333;
+    color: #fff;
+  }
+  
