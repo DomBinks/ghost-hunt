@@ -53,7 +53,16 @@ def parseString():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=8025)
+    #app.run(debug=True, port=8024)
+    ip = "http://192.168.115.194"
+    r = requests.post(ip, {
+                'Type': ghostType, 
+                'Name': ghostSName, 
+                'Location':suggestedLocation, 
+                'Activity': ghostActivity 
+                }) 
+    if r.text == "Valid Text":
+        pass
 
 
     

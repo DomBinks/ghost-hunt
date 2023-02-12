@@ -21,13 +21,9 @@
 #define led2 10
 #define led3 11
 
-SoftwareSerial mySerial =  SoftwareSerial(rxPin, txPin);
 Servo servo;
-SoftwareSerial mySerial = SoftwareSerial(rxPin, txPin);
 
 String location;
-int16_t ax, ay, az;
-int16_t gx, gy, gz;
 
 
 // Function definitions
@@ -68,12 +64,7 @@ void setup(){
   Serial.println("test");
   
 
-  //Wire.begin();
-  //Wire.setSCL(PICO_I2C_SCL);
-  //Wire.setSDA(PICO_I2C_SDA);
   
-  accelgyro.initialize();
-  Serial.println(accelgyro.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
   
   setSevenSeg(10);
   setBuzzer(0);
@@ -89,17 +80,21 @@ void setup1(){
 }
 
 float intensity = 0;
+Ghost ghost;
 void loop(){
-  Ghost ghost = getGhostFromServer();
+  ghost = getGhostFromServer();
+  ghost = getGhostFromServer();
   waitForMovement();
   bool found = false;
   while (!found){
+    
     location = getLocation();
-    if(location[0] == ghost.location)
+    Serial.println(location);
+    if(location == "a")
     {
       //we're in the ghosts area do spooky things 
       //delay(500); //wait some time
-      intensity += 0.5;
+      intensity += 1;
       ghostEffects(ghost);
     }
 
@@ -130,9 +125,28 @@ void setBuzzer(uint8_t i)
 }
 
 void ghostEffects(Ghost ghost)
-{
-  
-    return;
+{ 
+  if(intensity > 10)
+  { 
+    setSevenSeg(20);  
+    setBuzzer(3);
+  }
+  if(intensity > 30)
+  { 
+    setSevenSeg(40);
+    setBuzzer(6);  
+  }     
+  if(intensity > 50)
+  { 
+    setSevenSeg(90);  
+    setBuzzer(15);
+  }
+  if(intensity > 60)
+  {
+    setSevenSeg(0);
+    setBuzzer(0);    
+  }
+  return;
 }
 
 void loop1(){
@@ -142,11 +156,11 @@ void loop1(){
 // Blocking function that waits to recieve a "ghost" from the server.
 // returns a struct containing the ghost type and any other location 
 Ghost getGhostFromServer(){
-    Ghost ghost;
+    Ghost ghost = {"", "", 0, 0};
     // do some logic for actually getting a ghost
   
     while (ghost.name != "") {
-      Serial.println("test");
+      Serial.println(ghost.name);
       ghost = handleClient();
     }
     Serial.println("##############################################################################");
