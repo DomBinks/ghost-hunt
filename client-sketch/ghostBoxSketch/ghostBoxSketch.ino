@@ -1,67 +1,157 @@
 #include <Arduino.h>
-
-#include <Adafruit_MPU6050.h>
-#include <Adafruit_Sensor.h>
-#include <MPU6050.h>
+#include "LocationFinder.h"
+#include <SoftwareSerial.h>
 #include <Wire.h>
-#include <LocationFinder.h>
+#include <Servo.h>
+#include "LocationFinder.h"
 
-#define GHOST_TYPE_LEN 32
-#define GHOST_NAME_LEN 32
+#include "Ghost.h"
+#include "WiFiJSONServer.h"
+
+
+#define PICO_I2C_SDA 20
+#define PICO_I2C_SCL 21
+#define rxPin 0
+#define txPin 15
+#define sevseg 12
+#define buzzer 13
+#define servopin 8
+
+#define led1 9
+#define led2 10
+#define led3 11
+
+SoftwareSerial mySerial =  SoftwareSerial(rxPin, txPin);
+Servo servo;
+SoftwareSerial mySerial = SoftwareSerial(rxPin, txPin);
 
 String location;
-Adafruit_MPU6050 mpu;
+int16_t ax, ay, az;
+int16_t gx, gy, gz;
 
-struct Ghost {
-    char type[GHOST_TYPE_LEN];
-    char name[GHOST_NAME_LEN];
-    uint8_t activeness;
-};
 
 // Function definitions
 Ghost getGhostFromServer();
 void waitForMovement();
 String getLocation();
 unsigned long timeSince(unsigned long);
-
+void ghostEffects(Ghost);
 
 void setup(){
-  Serial.begin(115200);
+  pinMode(txPin, OUTPUT);
+
+  mySerial.begin(9600);
+  pinMode(sevseg,OUTPUT);
+  pinMode(buzzer,OUTPUT);
+
+  pinMode(led1,OUTPUT);
+  pinMode(led2,OUTPUT);
+  pinMode(led3,OUTPUT);
+
+  digitalWrite(led1,HIGH);
+  digitalWrite(led2,HIGH);
+  digitalWrite(led3,HIGH);
+
+  digitalWrite(buzzer,LOW);
+  digitalWrite(sevseg,LOW);
+  Serial.begin(9600);
+
+  servo.attach(servopin);
+  
   while (!Serial)
     delay(3); // will 
   // Try to initialize!
-  while (!mpu.begin()) {
-    Serial.println("Failed to find MPU6050 chip");
-    delay(3);
-  }
+  //while (!mpu.begin()) {
+  //  Serial.println("Failed to find MPU6050 chip");
+  //  delay(3);
+  //}
+  Serial.println("test");
+  
+
+  //Wire.begin();
+  //Wire.setSCL(PICO_I2C_SCL);
+  //Wire.setSDA(PICO_I2C_SDA);
+  
+  accelgyro.initialize();
+  Serial.println(accelgyro.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
+  
+  setSevenSeg(10);
+  setBuzzer(0);
+
+  setupWiFi();
+  startServer();
+
+
 }
 
 void setup1(){
 
 }
 
+float intensity = 0;
 void loop(){
-/*  getGhostFromServer();
+  Ghost ghost = getGhostFromServer();
   waitForMovement();
-  bool found;
+  bool found = false;
   while (!found){
     location = getLocation();
+    if(location[0] == ghost.location)
+    {
+      //we're in the ghosts area do spooky things 
+      //delay(500); //wait some time
+      intensity += 0.5;
+      ghostEffects(ghost);
+    }
+
+
+  
+  //Serial.print("Current Location: ");
+  //Serial.println(getLocation());
+  delay(500);
   }
-  */
-  Serial.print("Current Location: ");
-  Serial.println(getLocation());
+
+}
+///sets the 7 segment display
+///
+void setSevenSeg(uint8_t i)
+{
+  digitalWrite(sevseg, HIGH);
+      mySerial.write(i);
+  delay(10);
+  digitalWrite(sevseg, LOW);
+}
+
+void setBuzzer(uint8_t i)
+{
+  digitalWrite(buzzer, HIGH);
+      mySerial.write(i);
+  delay(10);
+  digitalWrite(buzzer, LOW);
+}
+
+void ghostEffects(Ghost ghost)
+{
+  
+    return;
 }
 
 void loop1(){
-
+  
 }
 
 // Blocking function that waits to recieve a "ghost" from the server.
 // returns a struct containing the ghost type and any other location 
 Ghost getGhostFromServer(){
-    Ghost ghost = {"Poltegeist", "Daniel"};
+    Ghost ghost;
     // do some logic for actually getting a ghost
-
+  
+    while (ghost.name != "") {
+      Serial.println("test");
+      ghost = handleClient();
+    }
+    Serial.println("##############################################################################");
+    Serial.println("################### S U C C E S S ############################################");
+    Serial.println("##############################################################################");
     return ghost;
 }
 

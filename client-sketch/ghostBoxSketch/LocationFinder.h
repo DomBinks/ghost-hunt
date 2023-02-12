@@ -1,7 +1,7 @@
 #pragma once
 #include <stdio.h>
 
-#include "WiFi.h"
+#include <WiFi.h>
 
 class WifiScanner {
 public:
@@ -152,6 +152,7 @@ protected:
     return String(hex);
   }
 };
+
 class WiFiIndoorPositioning {
     public:
 
@@ -160,22 +161,22 @@ class WiFiIndoorPositioning {
          */
         template<typename Scanner>
         int predictRoomId(Scanner& scanner) {
-            float x[14] = {0};
+            float x[10] = {0};
             uint16_t votes[2] = { 0 };
 
             scanner.scan();
             convertToFeatures(scanner, x);
 
-            if (x[1] <= -65.5) {  if (x[10] <= -74.0) {   votes[0] += 1;  } else {  if (x[5] <= -67.0) {  if (x[5] <= -75.0) {   votes[1] += 1;  } else {   votes[0] += 1;  }   } else {  if (x[3] <= -73.5) {   votes[1] += 1;  } else {   votes[0] += 1;  }   }   }   } else {   votes[1] += 1;  } 
-            if (x[11] <= -65.0) {  if (x[5] <= -64.5) {  if (x[9] <= -87.5) {   votes[0] += 1;  } else {  if (x[11] <= -71.5) {   votes[1] += 1;  } else {  if (x[3] <= -64.5) {  if (x[13] <= -40.5) {   votes[1] += 1;  } else {   votes[0] += 1;  }   } else {   votes[1] += 1;  }   }   }   } else {   votes[0] += 1;  }   } else {   votes[1] += 1;  } 
-            if (x[10] <= -33.0) {  if (x[2] <= -27.5) {   votes[0] += 1;  } else {   votes[1] += 1;  }   } else {  if (x[11] <= -69.0) {   votes[0] += 1;  } else {   votes[1] += 1;  }   } 
-            if (x[2] <= -28.0) {  if (x[2] <= -66.5) {  if (x[13] <= -87.5) {   votes[1] += 1;  } else {   votes[0] += 1;  }   } else {   votes[0] += 1;  }   } else {  if (x[8] <= -34.0) {   votes[1] += 1;  } else {  if (x[0] <= -39.5) {   votes[0] += 1;  } else {   votes[1] += 1;  }   }   } 
-            if (x[2] <= -27.5) {   votes[0] += 1;  } else {  if (x[10] <= -75.0) {   votes[0] += 1;  } else {   votes[1] += 1;  }   } 
-            if (x[3] <= -64.5) {  if (x[3] <= -73.5) {   votes[1] += 1;  } else {   votes[0] += 1;  }   } else {   votes[1] += 1;  } 
-            if (x[2] <= -27.5) {   votes[0] += 1;  } else {   votes[1] += 1;  } 
-            if (x[1] <= -65.5) {  if (x[10] <= -34.0) {  if (x[9] <= -38.0) {   votes[1] += 1;  } else {   votes[0] += 1;  }   } else {  if (x[5] <= -72.5) {   votes[1] += 1;  } else {   votes[0] += 1;  }   }   } else {  if (x[3] <= -64.5) {   votes[0] += 1;  } else {   votes[1] += 1;  }   } 
-            if (x[1] <= -66.0) {  if (x[13] <= -84.0) {   votes[0] += 1;  } else {  if (x[13] <= -40.5) {   votes[1] += 1;  } else {  if (x[7] <= -35.0) {  if (x[9] <= -86.0) {   votes[0] += 1;  } else {   votes[1] += 1;  }   } else {   votes[0] += 1;  }   }   }   } else {   votes[1] += 1;  } 
-            if (x[11] <= -68.5) {  if (x[3] <= -73.5) {   votes[1] += 1;  } else {  if (x[1] <= -56.0) {  if (x[6] <= -36.5) {  if (x[1] <= -71.5) {   votes[0] += 1;  } else {   votes[1] += 1;  }   } else {   votes[0] += 1;  }   } else {   votes[1] += 1;  }   }   } else {  if (x[10] <= -33.0) {   votes[1] += 1;  } else {  if (x[9] <= -82.0) {  if (x[4] <= -38.0) {   votes[1] += 1;  } else {   votes[0] += 1;  }   } else {   votes[1] += 1;  }   }   } 
+            if (x[4] <= -33.0) {  if (x[6] <= -82.5) {   votes[0] += 1;  } else {  if (x[5] <= -29.5) {   votes[1] += 1;  } else {  if (x[2] <= -63.0) {   votes[1] += 1;  } else {   votes[0] += 1;  }   }   }   } else {  if (x[8] <= -63.5) {  if (x[7] <= -78.0) {   votes[1] += 1;  } else {  if (x[5] <= -77.5) {   votes[0] += 1;  } else {  if (x[6] <= -32.0) {   votes[1] += 1;  } else {  if (x[7] <= -68.0) {   votes[0] += 1;  } else {  if (x[7] <= -64.5) {   votes[1] += 1;  } else {  if (x[7] <= -61.5) {   votes[0] += 1;  } else {   votes[1] += 1;  }   }   }   }   }   }   } else {   votes[0] += 1;  }   } 
+            if (x[8] <= -76.5) {  if (x[5] <= -73.5) {  if (x[0] <= -39.5) {   votes[0] += 1;  } else {  if (x[7] <= -76.5) {   votes[0] += 1;  } else {   votes[1] += 1;  }   }   } else {   votes[1] += 1;  }   } else {  if (x[4] <= -34.5) {  if (x[8] <= -67.0) {  if (x[8] <= -71.0) {   votes[0] += 1;  } else {   votes[1] += 1;  }   } else {  if (x[7] <= -62.5) {   votes[0] += 1;  } else {   votes[1] += 1;  }   }   } else {  if (x[0] <= -28.0) {   votes[0] += 1;  } else {  if (x[3] <= -39.0) {   votes[0] += 1;  } else {  if (x[7] <= -63.0) {  if (x[8] <= -66.0) {  if (x[7] <= -74.0) {   votes[0] += 1;  } else {  if (x[2] <= -71.5) {   votes[1] += 1;  } else {  if (x[2] <= -67.5) {   votes[0] += 1;  } else {   votes[1] += 1;  }   }   }   } else {   votes[0] += 1;  }   } else {   votes[1] += 1;  }   }   }   }   } 
+            if (x[4] <= -33.0) {  if (x[4] <= -83.5) {  if (x[6] <= -37.5) {   votes[1] += 1;  } else {   votes[0] += 1;  }   } else {   votes[1] += 1;  }   } else {  if (x[0] <= -32.5) {   votes[0] += 1;  } else {  if (x[2] <= -76.0) {   votes[0] += 1;  } else {  if (x[7] <= -68.5) {   votes[1] += 1;  } else {  if (x[8] <= -55.5) {   votes[0] += 1;  } else {   votes[1] += 1;  }   }   }   }   } 
+            if (x[6] <= -32.0) {  if (x[4] <= -85.5) {  if (x[7] <= -65.5) {   votes[0] += 1;  } else {   votes[1] += 1;  }   } else {   votes[1] += 1;  }   } else {  if (x[2] <= -68.0) {  if (x[3] <= -37.5) {   votes[0] += 1;  } else {  if (x[5] <= -77.5) {   votes[0] += 1;  } else {  if (x[9] <= -87.0) {   votes[0] += 1;  } else {   votes[1] += 1;  }   }   }   } else {  if (x[8] <= -51.0) {  if (x[7] <= -67.5) {  if (x[2] <= -65.5) {   votes[0] += 1;  } else {   votes[1] += 1;  }   } else {   votes[0] += 1;  }   } else {  if (x[2] <= -45.0) {   votes[1] += 1;  } else {   votes[0] += 1;  }   }   }   } 
+            if (x[5] <= -73.5) {  if (x[4] <= -36.5) {  if (x[0] <= -35.0) {   votes[0] += 1;  } else {   votes[1] += 1;  }   } else {  if (x[7] <= -71.0) {  if (x[5] <= -77.5) {   votes[0] += 1;  } else {   votes[1] += 1;  }   } else {   votes[0] += 1;  }   }   } else {  if (x[5] <= -29.5) {  if (x[3] <= -37.5) {   votes[0] += 1;  } else {   votes[1] += 1;  }   } else {  if (x[4] <= -37.5) {  if (x[2] <= -63.0) {   votes[1] += 1;  } else {   votes[0] += 1;  }   } else {   votes[0] += 1;  }   }   } 
+            if (x[8] <= -77.5) {   votes[1] += 1;  } else {  if (x[1] <= -77.5) {   votes[1] += 1;  } else {  if (x[5] <= -32.5) {  if (x[7] <= -72.5) {   votes[0] += 1;  } else {  if (x[4] <= -41.5) {   votes[1] += 1;  } else {  if (x[5] <= -75.5) {   votes[0] += 1;  } else {  if (x[7] <= -64.5) {   votes[1] += 1;  } else {   votes[0] += 1;  }   }   }   }   } else {  if (x[4] <= -42.0) {  if (x[8] <= -67.0) {   votes[1] += 1;  } else {   votes[0] += 1;  }   } else {   votes[0] += 1;  }   }   }   } 
+            if (x[0] <= -28.0) {   votes[0] += 1;  } else {  if (x[4] <= -33.0) {  if (x[1] <= -69.5) {   votes[1] += 1;  } else {  if (x[6] <= -36.0) {   votes[1] += 1;  } else {   votes[0] += 1;  }   }   } else {  if (x[5] <= -72.0) {   votes[0] += 1;  } else {  if (x[2] <= -74.5) {   votes[1] += 1;  } else {  if (x[7] <= -55.5) {   votes[0] += 1;  } else {   votes[1] += 1;  }   }   }   }   } 
+            if (x[0] <= -33.5) {   votes[0] += 1;  } else {  if (x[2] <= -71.5) {   votes[1] += 1;  } else {  if (x[9] <= -83.0) {   votes[0] += 1;  } else {  if (x[4] <= -38.0) {  if (x[4] <= -86.5) {   votes[0] += 1;  } else {   votes[1] += 1;  }   } else {  if (x[7] <= -71.0) {   votes[1] += 1;  } else {  if (x[2] <= -62.0) {  if (x[7] <= -66.5) {  if (x[3] <= -39.0) {   votes[0] += 1;  } else {  if (x[2] <= -67.5) {   votes[0] += 1;  } else {   votes[1] += 1;  }   }   } else {   votes[0] += 1;  }   } else {   votes[1] += 1;  }   }   }   }   }   } 
+            if (x[7] <= -71.0) {  if (x[3] <= -37.5) {   votes[0] += 1;  } else {  if (x[2] <= -68.0) {  if (x[5] <= -78.5) {  if (x[8] <= -73.0) {   votes[0] += 1;  } else {   votes[1] += 1;  }   } else {  if (x[7] <= -76.0) {  if (x[1] <= -37.0) {   votes[1] += 1;  } else {  if (x[2] <= -79.0) {   votes[0] += 1;  } else {   votes[1] += 1;  }   }   } else {   votes[1] += 1;  }   }   } else {   votes[0] += 1;  }   }   } else {  if (x[6] <= -37.5) {   votes[1] += 1;  } else {  if (x[1] <= -80.0) {   votes[1] += 1;  } else {  if (x[7] <= -50.5) {  if (x[0] <= -32.5) {   votes[0] += 1;  } else {  if (x[5] <= -73.5) {   votes[0] += 1;  } else {  if (x[4] <= -80.5) {   votes[0] += 1;  } else {  if (x[7] <= -69.5) {   votes[0] += 1;  } else {  if (x[2] <= -68.5) {   votes[0] += 1;  } else {   votes[1] += 1;  }   }   }   }   }   } else {  if (x[0] <= -32.5) {   votes[0] += 1;  } else {   votes[1] += 1;  }   }   }   }   } 
+            if (x[5] <= -73.5) {  if (x[4] <= -39.5) {   votes[1] += 1;  } else {   votes[0] += 1;  }   } else {  if (x[5] <= -29.5) {  if (x[0] <= -38.5) {   votes[0] += 1;  } else {   votes[1] += 1;  }   } else {  if (x[7] <= -71.0) {   votes[1] += 1;  } else {  if (x[2] <= -64.5) {  if (x[8] <= -68.5) {   votes[0] += 1;  } else {   votes[1] += 1;  }   } else {   votes[0] += 1;  }   }   }   } 
             
 
             // return argmax of votes
@@ -201,9 +202,9 @@ class WiFiIndoorPositioning {
 
             switch (roomId) {
                 
-                case 0: return (lastRoomName = "roomA");
+                case 0: return (lastRoomName = "a");
                 
-                case 1: return (lastRoomName = "roomB");
+                case 1: return (lastRoomName = "b");
                 
                 default: return (lastRoomName = "???");
             }
@@ -237,27 +238,27 @@ class WiFiIndoorPositioning {
                 scanner.next();
 
                 
-                if (ssid == "internet") {
+                if (ssid == "OnePlus 7T") {
                     x[0] = rssi;
                     continue;
                 }
                 
-                if (ssid == "eduroam") {
+                if (ssid == "Ben's Galaxy Z Fold3 5G") {
                     x[1] = rssi;
                     continue;
                 }
                 
-                if (ssid == "SteamDuck") {
+                if (ssid == "UoN-guest") {
                     x[2] = rssi;
                     continue;
                 }
                 
-                if (ssid == "UoN-guest") {
+                if (ssid == "AndroidAP_4580") {
                     x[3] = rssi;
                     continue;
                 }
                 
-                if (ssid == "IP in the shower") {
+                if (ssid == "ppp") {
                     x[4] = rssi;
                     continue;
                 }
@@ -267,49 +268,30 @@ class WiFiIndoorPositioning {
                     continue;
                 }
                 
-                if (ssid == "DIRECT-69-HP 420x DUPLEX") {
+                if (ssid == "Jj") {
                     x[6] = rssi;
                     continue;
                 }
                 
-                if (ssid == "Jj") {
+                if (ssid == "UoN-secure") {
                     x[7] = rssi;
                     continue;
                 }
                 
-                if (ssid == "Ben's Galaxy Z Fold3 5G") {
+                if (ssid == "eduroam") {
                     x[8] = rssi;
                     continue;
                 }
                 
-                if (ssid == "ppp") {
-                    x[9] = rssi;
-                    continue;
-                }
-                
-                if (ssid == "Kieran's laptop") {
-                    x[10] = rssi;
-                    continue;
-                }
-                
-                if (ssid == "UoN-secure") {
-                    x[11] = rssi;
-                    continue;
-                }
-                
-                if (ssid == "AndroidAP_4580") {
-                    x[12] = rssi;
-                    continue;
-                }
-                
                 if (ssid == "CSiTrobots") {
-                    x[13] = rssi;
+                    x[9] = rssi;
                     continue;
                 }
                 
             }
         }
 };
+
 
 
 WiFiIndoorPositioning positioning;
