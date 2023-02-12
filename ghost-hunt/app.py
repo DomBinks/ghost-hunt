@@ -21,10 +21,12 @@ def index_page():
 @app.route("/", methods=["POST"])
 def parseString():
     
-    command = request.form.get("command")
-    command = command.split(" ")
+    data = request.get_json
+    command = data.get("userInput")
+    print("1")
     match command[0]:
         case "connect":
+            print("2")
             pat = re.compile("^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$")
             if not pat.match(command[1]):
                 return
@@ -39,7 +41,8 @@ def parseString():
                 pass
                 
 
-        case "hi lol":
+        case "hi":
+            print("hello")
             pass
         case _:
             print("Unknown Command")

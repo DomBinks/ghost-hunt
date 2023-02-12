@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style2.css') }}">
   </head>
   <body>
+    <script src="{{url_for('static', filename='scripts/scripts.js')}}"></script>
     <main>
       <div class="terminal-window">
         <div class="terminal-header">
@@ -30,7 +31,6 @@
 |  $$$$$$/| $$  | $$|  $$$$$$/|  $$$$$$/   | $$         | $$  | $$|  $$$$$$/| $$ \  $$   | $$   
  \______/ |__/  |__/ \______/  \______/    |__/         |__/  |__/ \______/ |__/  \__/   |__/   
                                                                                                 
-                                                                                                
                   </p>
                 </div>
                 <div class="input-section">
@@ -38,6 +38,7 @@
                     <div class="command-line-terminal">
                       <div class="terminal-prompt">ghost-hunter@terminal:~$ </div>
                       <div><input type="text" id="input-field" autofocus></div>
+        
                       <div id="cursor">
                     </div>
                     <button type="submit">Submit</button>
@@ -51,33 +52,3 @@
     
   </body>
 </html>
-
-
-<script>
-    const inputField = document.getElementById("input-field");
-    const form = document.querySelector("form");
-  
-    form.addEventListener("submit", function(event) {
-      event.preventDefault();
-      const userInput = inputField.value;
-      const terminalOutput = document.createElement("p");
-      terminalOutput.innerHTML = userInput;
-      document.querySelector(".terminal-body").appendChild(terminalOutput);
-      inputField.value = "";
-    });
-
-    const typingText = "This is the description section where you can describe the ghost.";
-    const typeSpeed = 50;
-    let i = 0;
-  
-    function type() {
-      if (i < typingText.length) {
-        document.querySelector(".description-section p").innerHTML += typingText.charAt(i);
-        i++;
-        setTimeout(type, typeSpeed);
-      }
-    }
-  
-    window.addEventListener("load", type);
-  </script>
-  

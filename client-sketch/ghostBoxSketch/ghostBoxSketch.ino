@@ -23,7 +23,6 @@
 #define led3 18
 
 Servo servo;
-SoftwareSerial mySerial = SoftwareSerial(rxPin, txPin);
 
 String location;
 
@@ -113,6 +112,7 @@ void loop(){
   waitForMovement();
   bool found = false;
   while (!found){
+    
     location = getLocation();
     if(true || location[0] == ghost.location)
     {
