@@ -5,7 +5,7 @@
   right: 2%;
   top: 2%;
   bottom: 0;
-  overflow: hidden;
+  overflow: auto;
   background-color: #333;
   background-image: radial-gradient(
   rgba(0, 150, 0, 0.75), #333 120%
@@ -62,4 +62,8 @@
   background-color: transparent;
   color: #fff;
 
+}
+
+#submit {
+  
 }

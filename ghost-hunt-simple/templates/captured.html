@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Ghost Hunt</title>
+    <title id="title">Ghost Hunt</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
   </head>
   <body>
@@ -12,5 +12,6 @@
         <button class="scan-ghost" type="submit">Home</button>
       </form>
     </header>
+    <script src="{{url_for('static', filename='scripts/script.js')}}"></script>
   </body>
 </html>

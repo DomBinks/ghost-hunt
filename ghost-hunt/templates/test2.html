@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Terminal Emulator</title>
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style3.css') }}">
 </head>
 <body>
   <div id="terminal">
@@ -12,8 +12,9 @@
     <div id="terminal-output"></div>
     <div id="input">
         <div id="terminal-input">ghost-hunter@terminal:~$&nbsp;<input id="command-line" type="text"></div>
+        <button id="submit" type="submit">Submit</button>
     </div>
   </div>
-  <script src="script.js"></script>
+  <script src="{{url_for('static', filename='scripts/script2.js')}}"></script>
 </body>
 </html>

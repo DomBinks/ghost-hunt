@@ -16,7 +16,7 @@ body {
     rgba(0, 150, 0, 0.75), #333 120%
     );
     height: 60vh;
-    width: 40%;
+    width: 100%;
     position: absolute;
     top: 5%;
     right: 2rem;
@@ -31,7 +31,7 @@ body {
     width: 100%;
     position: absolute;
     top: 0;
-    left: 0;selectionStart
+    left: 0;
     text-align: center;
     color: #333;
     font: 1.3rem Inconsolata, monospace;
