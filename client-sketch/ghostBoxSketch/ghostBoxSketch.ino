@@ -1,13 +1,13 @@
 #include <Arduino.h>
 #include "LocationFinder.h"
 #include <SoftwareSerial.h>
-
 #include <Wire.h>
 #include <Servo.h>
 #include "LocationFinder.h"
 
-#define GHOST_TYPE_LEN 32
-#define GHOST_NAME_LEN 32
+#include "Ghost.h"
+#include "WiFiJSONServer.h"
+
 
 #define PICO_I2C_SDA 20
 #define PICO_I2C_SCL 21
@@ -23,17 +23,12 @@
 
 SoftwareSerial mySerial =  SoftwareSerial(rxPin, txPin);
 Servo servo;
+SoftwareSerial mySerial = SoftwareSerial(rxPin, txPin);
 
 String location;
 int16_t ax, ay, az;
 int16_t gx, gy, gz;
 
-typedef struct Ghost {
-    char type[GHOST_TYPE_LEN];
-    char name[GHOST_NAME_LEN];
-    char location; //the room the ghost is in
-    uint8_t activeness;
-} Ghost;
 
 // Function definitions
 Ghost getGhostFromServer();
