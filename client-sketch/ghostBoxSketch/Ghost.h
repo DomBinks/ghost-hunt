@@ -4,8 +4,9 @@
 #define GHOST_NAME_LEN 32
 
 typedef struct Ghost {
-    char type[GHOST_TYPE_LEN];
-    char name[GHOST_NAME_LEN];
+    String type;
+    String name;
     char location; //the room the ghost is in
     uint8_t activeness;
 } Ghost;
+

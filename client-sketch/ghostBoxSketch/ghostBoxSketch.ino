@@ -21,12 +21,9 @@
 #define led2 10
 #define led3 11
 
-SoftwareSerial mySerial =  SoftwareSerial(rxPin, txPin);
 Servo servo;
 
 String location;
-int16_t ax, ay, az;
-int16_t gx, gy, gz;
 
 
 // Function definitions
@@ -35,7 +32,6 @@ void waitForMovement();
 String getLocation();
 unsigned long timeSince(unsigned long);
 void ghostEffects(Ghost);
-
 
 void setup(){
   pinMode(txPin, OUTPUT);
@@ -68,20 +64,26 @@ void setup(){
   Serial.println("test");
   
 
-  //Wire.begin();
-  //Wire.setSCL(PICO_I2C_SCL);
-  //Wire.setSDA(PICO_I2C_SDA);
+  
+  
   setSevenSeg(10);
   setBuzzer(0);
+
+  setupWiFi();
+  startServer();
+
 
 }
 
 void setup1(){
 
 }
+
 float intensity = 0;
+Ghost ghost;
 void loop(){
-  Ghost ghost = getGhostFromServer();
+  ghost = getGhostFromServer();
+  ghost = getGhostFromServer();
   waitForMovement();
   bool found = false;
   while (!found){
@@ -95,7 +97,11 @@ void loop(){
       intensity += 1;
       ghostEffects(ghost);
     }
-  Serial.println("hello world");
+
+
+  
+  //Serial.print("Current Location: ");
+  //Serial.println(getLocation());
   delay(500);
   }
 
@@ -150,9 +156,16 @@ void loop1(){
 // Blocking function that waits to recieve a "ghost" from the server.
 // returns a struct containing the ghost type and any other location 
 Ghost getGhostFromServer(){
-    Ghost ghost = {"Poltegeist", "Daniel"};
+    Ghost ghost = {"", "", 0, 0};
     // do some logic for actually getting a ghost
-
+  
+    while (ghost.name != "") {
+      Serial.println(ghost.name);
+      ghost = handleClient();
+    }
+    Serial.println("##############################################################################");
+    Serial.println("################### S U C C E S S ############################################");
+    Serial.println("##############################################################################");
     return ghost;
 }
 

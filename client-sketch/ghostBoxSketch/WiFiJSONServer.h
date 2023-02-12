@@ -25,10 +25,10 @@ void startServer() {
   Serial.println(WiFi.localIP());
 }
 
-void handleClient() {
+Ghost handleClient() {
   WiFiClient client = server.available();
   if (!client) {
-    return;
+    return {"","",0,0};
   }
 
   while (!client.available()) {
@@ -44,18 +44,19 @@ void handleClient() {
     if (error) {
       Serial.print(F("deserializeJson() failed with code "));
       Serial.println(error.c_str());
-      return;
+      return {"","",0,0};
     }
 
+    
     // Use the values in the JSON object
-    int x = jsonBuffer["x"];
-    int y = jsonBuffer["y"];
+    const char * name = jsonBuffer["Name"];
+    const char * gType = jsonBuffer["Type"];
+    uint8_t location = jsonBuffer["Location"];
+    uint8_t activity = jsonBuffer["Activity"];
 
-    // Do something with the values
-    Serial.print("x: ");
-    Serial.println(x);
-    Serial.print("y: ");
-    Serial.println(y);
+    Ghost ghost = {name, gType, location, activity};
+
+    return ghost;
   }
 
   client.stop();
