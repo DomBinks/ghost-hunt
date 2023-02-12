@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Ghost Hunt</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+  </head>
+  <body>
+    <header>
+      <h1>You caught the ghost</h1> 
+      <form action="{{ url_for('index_page') }}" method="get">
+        <button class="scan-ghost" type="submit">Home</button>
+      </form>
+    </header>
+  </body>
+</html>
