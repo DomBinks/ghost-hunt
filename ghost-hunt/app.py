@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 import requests
 import re
 import ghosts
+import socket
 
 app = Flask(__name__)
 
@@ -54,15 +55,16 @@ def parseString():
 
 if __name__ == '__main__':
     #app.run(debug=True, port=8024)
-    ip = "http://192.168.115.194"
-    r = requests.post(ip, {
-                'Type': ghostType, 
-                'Name': ghostSName, 
-                'Location':suggestedLocation, 
-                'Activity': ghostActivity 
-                }) 
-    if r.text == "Valid Text":
-        pass
+    ip = "192.168.115.59"
+    import time
+    conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    conn.connect((ip,80))
+    r = "{'Type': 'test','Name': 'Dom Bimkf', 'Location':'a', 'Activity': 100, 'Code':20}\r"
+    while(1):
+        conn.send(r.encode())
+        
+        time.sleep(0.2)
+        
 
 
     

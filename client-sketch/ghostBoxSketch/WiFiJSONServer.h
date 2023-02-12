@@ -13,7 +13,7 @@ void setupWiFi() {
   WiFi.begin(ssid, password);
 
   while (WiFi.status() != WL_CONNECTED) {
-    delay(1000);
+    delay(500);
     Serial.println("Connecting to WiFi...");
   }
   Serial.println("Connected to WiFi");
@@ -26,19 +26,24 @@ void startServer() {
 }
 
 Ghost handleClient() {
-  WiFiClient client = server.available();
-  if (!client) {
-    return {"","",0,0};
+  WiFiClient client=server.available();
+  while (!client) {
+    Serial.println("No client object initialised");
+    delay(100);
+    client=server.available();
   }
 
   while (!client.available()) {
-    delay(1);
+    Serial.println("Client not available");
+    //delay(500);
+    return {"","",0,0};
   }
 
   String request = client.readStringUntil('\r');
   client.flush();
-
-  if (request.indexOf("POST /") != -1) {
+  Serial.println(request);
+  if (request) {
+    Serial.println("Deserialising");
     StaticJsonDocument<200> jsonBuffer;
     DeserializationError error = deserializeJson(jsonBuffer, request);
     if (error) {
@@ -53,8 +58,9 @@ Ghost handleClient() {
     const char * gType = jsonBuffer["Type"];
     uint8_t location = jsonBuffer["Location"];
     uint8_t activity = jsonBuffer["Activity"];
+    uint8_t code = jsonBuffer["Code"];
 
-    Ghost ghost = {name, gType, location, activity};
+    Ghost ghost = {gType, name, location, activity, code};
 
     return ghost;
   }
