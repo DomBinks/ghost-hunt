@@ -8,5 +8,6 @@ typedef struct Ghost {
     String name;
     char location; //the room the ghost is in
     uint8_t activeness;
+    uint8_t foundCode;
 } Ghost;
 

@@ -9,17 +9,18 @@
 #include "WiFiJSONServer.h"
 
 
-#define PICO_I2C_SDA 20
-#define PICO_I2C_SCL 21
+
 #define rxPin 0
 #define txPin 15
 #define sevseg 12
 #define buzzer 13
 #define servopin 8
+#define buttonPin 19
+#define statusLED 20
 
-#define led1 9
-#define led2 10
-#define led3 11
+#define led1 16
+#define led2 17
+#define led3 18
 
 Servo servo;
 SoftwareSerial mySerial = SoftwareSerial(rxPin, txPin);
@@ -32,7 +33,17 @@ Ghost getGhostFromServer();
 void waitForMovement();
 String getLocation();
 unsigned long timeSince(unsigned long);
-void ghostEffects(Ghost);
+void ghostEffects(uint8_t);
+
+void endGame(Ghost ghost){
+  //setSevenSeg(ghost.foundCode);
+  
+  for (int i=0; i<20; i++){
+    setSevenSeg(ghost.foundCode);
+    delay(500);
+  }
+  ghostEffects(255);
+}
 
 void setup(){
   pinMode(txPin, OUTPUT);
@@ -44,25 +55,27 @@ void setup(){
   pinMode(led1,OUTPUT);
   pinMode(led2,OUTPUT);
   pinMode(led3,OUTPUT);
+  pinMode(buttonPin,INPUT);
+  pinMode(statusLED,OUTPUT);
 
-  digitalWrite(led1,HIGH);
-  digitalWrite(led2,HIGH);
-  digitalWrite(led3,HIGH);
+  digitalWrite(led1,LOW);
+  digitalWrite(led2,LOW);
+  digitalWrite(led3,LOW);
+  digitalWrite(statusLED,LOW);
 
   digitalWrite(buzzer,LOW);
   digitalWrite(sevseg,LOW);
-  Serial.begin(9600);
+  setSevenSeg(12);
 
   servo.attach(servopin);
+  Serial.begin(9600);
   
-  while (!Serial)
-    delay(3); // will 
   // Try to initialize!
   //while (!mpu.begin()) {
   //  Serial.println("Failed to find MPU6050 chip");
   //  delay(3);
   //}
-  Serial.println("test");
+  
   
 
   
@@ -72,6 +85,7 @@ void setup(){
 
   setupWiFi();
   startServer();
+  digitalWrite(statusLED, HIGH);
 
 
 }
@@ -81,21 +95,38 @@ void setup1(){
 }
 
 float intensity = 0;
+float offset = 0;
 Ghost ghost;
 void loop(){
+  digitalWrite(led1,LOW);
+  digitalWrite(led2,LOW);
+  digitalWrite(led3,LOW);
+
+  digitalWrite(buzzer,LOW);
+  digitalWrite(sevseg,LOW);
+  // great succ
   ghost = getGhostFromServer();
-  ghost = getGhostFromServer();
+
+  // stuff
+  offset = ((float) ghost.activeness) / 128.0;
+  randomSeed(analogRead(0));
   waitForMovement();
   bool found = false;
   while (!found){
     location = getLocation();
-    if(location[0] == ghost.location)
+    if(true || location[0] == ghost.location)
     {
       //we're in the ghosts area do spooky things 
       //delay(500); //wait some time
-      intensity += 0.5;
-      ghostEffects(ghost);
+      intensity += offset;
+      ghostEffects(intensity);
+      // button is pressed
+      if (digitalRead(buttonPin) && intensity > 52){
+        found = true;
+        endGame(ghost);
+      }
     }
+    delay(10);
 
 
   
@@ -123,10 +154,37 @@ void setBuzzer(uint8_t i)
   digitalWrite(buzzer, LOW);
 }
 
-void ghostEffects(Ghost ghost)
+void ghostEffects(uint8_t intensity)
 {
-  
-    return;
+  Serial.println("Set ghosteffects");
+  if(intensity > 10)
+  { 
+    setSevenSeg(20);  
+    setBuzzer(3);
+    digitalWrite(led1, HIGH);
+  }
+  if(intensity > 30)
+  { 
+    setSevenSeg(40);
+    setBuzzer(6);  
+    digitalWrite(led2, HIGH);
+    
+  }     
+  if(intensity > 50)
+  { 
+    setSevenSeg(90);  
+    setBuzzer(15);
+    digitalWrite(led3, HIGH);
+  }
+  if(intensity > 60)
+  {
+    setSevenSeg(0);
+    setBuzzer(0);    
+    digitalWrite(led1, LOW);
+    digitalWrite(led2, LOW);
+    digitalWrite(led3, LOW);
+  }
+  return;
 }
 
 void loop1(){
@@ -139,10 +197,10 @@ Ghost getGhostFromServer(){
     Ghost ghost = {"", "", 0, 0};
     // do some logic for actually getting a ghost
   
-    while (ghost.name != "") {
-      Serial.println(ghost.name);
+    while (ghost.name == "") {
       ghost = handleClient();
     }
+    Serial.println(ghost.name);
     Serial.println("##############################################################################");
     Serial.println("################### S U C C E S S ############################################");
     Serial.println("##############################################################################");
@@ -151,10 +209,11 @@ Ghost getGhostFromServer(){
 
 // use the MPU-6050 accelerometer breakout board to detect movement
 void waitForMovement(){
+  return;
   // gets time in ms since program started 
   unsigned long startTime = millis();
   bool not_moved = true;
-  while (not_moved && timeSince(startTime) < 30000) {
+  while (not_moved && timeSince(startTime) < 5000) {
     // check if moved
   }
 
@@ -163,6 +222,7 @@ void waitForMovement(){
 // get the current relative location from the wifi scanning stuff.
 WifiScanner s;
 String getLocation() {
+  return "a";
   return positioning.predictRoomName(s);
 }
 
