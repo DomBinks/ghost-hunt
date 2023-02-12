@@ -1,6 +1,7 @@
+import math
 import os
 import openai
-from random import randint
+import random
 
 ghost_types = [
     "Banshee",
@@ -269,16 +270,22 @@ prompt = "Write ~100 word backstory about {name}, \
         Now they are a vengeful ghost."
 
 def getRandomFirstName():
-    return first_names[randint(0,len(first_names)-1)]
+    return first_names[random.randint(0,len(first_names)-1)]
 
 def getRandomLastName():
-    return last_names[randint(0,len(last_names)-1)]
+    return last_names[random.randint(0,len(last_names)-1)]
+
+def getLocation():
+    return random.choice(['a','b','c'])
+
+def getActivity():
+    return math.floor((random.randint(1,10)+random.randint(1,10))/2)
 
 def getRandomAge():
-    return str(randint(youngest_age, oldest_age))
+    return str(random.randint(youngest_age, oldest_age))
 
 def getRandomOccupation():
-    return occupations[randint(0,len(occupations)-1)]
+    return occupations[random.randint(0,len(occupations)-1)]
 
 def getBackstory(first_name, last_name, age, occupation):
     openai.api_key = os.getenv("OPENAI_API_KEY")
