@@ -1,7 +1,7 @@
 #pragma once
 #include <stdio.h>
 
-#include "WiFi.h"
+#include <WiFi.h>
 
 class WifiScanner {
 public:

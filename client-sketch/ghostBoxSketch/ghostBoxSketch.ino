@@ -30,7 +30,6 @@ String getLocation();
 unsigned long timeSince(unsigned long);
 void ghostEffects(Ghost);
 
-
 void setup(){
   pinMode(txPin, OUTPUT);
   mySerial.begin(9600);
@@ -56,12 +55,15 @@ void setup(){
   
   accelgyro.initialize();
   Serial.println(accelgyro.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
+  setupWiFi();
+  startServer();
 
 }
 
 void setup1(){
 
 }
+
 float intensity = 0;
 void loop(){
   Ghost ghost = getGhostFromServer();
@@ -77,16 +79,9 @@ void loop(){
       ghostEffects(ghost);
     }
 
-  accelgyro.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
+  
   //Serial.print("Current Location: ");
   //Serial.println(getLocation());
-  Serial.print("a/g:\t");
-  Serial.print(ax); Serial.print("\t");
-  Serial.print(ay); Serial.print("\t");
-  Serial.print(az); Serial.print("\t");
-  Serial.print(gx); Serial.print("\t");
-  Serial.print(gy); Serial.print("\t");
-  Serial.println(gz);
   delay(500);
   }
 
@@ -123,9 +118,16 @@ void loop1(){
 // Blocking function that waits to recieve a "ghost" from the server.
 // returns a struct containing the ghost type and any other location 
 Ghost getGhostFromServer(){
-    Ghost ghost = {"Poltegeist", "Daniel"};
+    Ghost ghost;
     // do some logic for actually getting a ghost
-
+  
+    while (ghost.name != "") {
+      Serial.println("test");
+      ghost = handleClient();
+    }
+    Serial.println("##############################################################################");
+    Serial.println("################### S U C C E S S ############################################");
+    Serial.println("##############################################################################");
     return ghost;
 }
 
