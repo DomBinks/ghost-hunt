@@ -287,6 +287,14 @@ def getRandomAge():
 def getRandomOccupation():
     return occupations[random.randint(0,len(occupations)-1)]
 
+def getType():
+    return random.choice(ghost_types)
+
+def getPortrait(first_name, last_name, age):
+    openai.api_key = os.getenv("OPENAI_API_KEY")
+    response = openai.Image.create(
+        prompt = f"{first_name} {last_name}, {age} years old, portrait in the style of Grant Wood"
+    )
 def getBackstory(first_name, last_name, age, occupation):
     openai.api_key = os.getenv("OPENAI_API_KEY")
     response = openai.Completion.create(
