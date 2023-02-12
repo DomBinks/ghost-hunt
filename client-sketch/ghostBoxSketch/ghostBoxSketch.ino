@@ -3,8 +3,8 @@
 #include <SoftwareSerial.h>
 
 #include <Wire.h>
+#include <Servo.h>
 #include "LocationFinder.h"
-#include <MPU6050.h>
 
 #define GHOST_TYPE_LEN 32
 #define GHOST_NAME_LEN 32
@@ -15,10 +15,15 @@
 #define txPin 15
 #define sevseg 12
 #define buzzer 13
+#define servopin 8
+
+#define led1 9
+#define led2 10
+#define led3 11
 
 SoftwareSerial mySerial =  SoftwareSerial(rxPin, txPin);
+Servo servo;
 
-MPU6050 accelgyro;
 String location;
 int16_t ax, ay, az;
 int16_t gx, gy, gz;
@@ -40,13 +45,25 @@ void ghostEffects(Ghost);
 
 void setup(){
   pinMode(txPin, OUTPUT);
+
   mySerial.begin(9600);
   pinMode(sevseg,OUTPUT);
   pinMode(buzzer,OUTPUT);
+
+  pinMode(led1,OUTPUT);
+  pinMode(led2,OUTPUT);
+  pinMode(led3,OUTPUT);
+
+  digitalWrite(led1,HIGH);
+  digitalWrite(led2,HIGH);
+  digitalWrite(led3,HIGH);
+
   digitalWrite(buzzer,LOW);
   digitalWrite(sevseg,LOW);
-  Serial.begin(115200);
+  Serial.begin(9600);
 
+  servo.attach(servopin);
+  
   while (!Serial)
     delay(3); // will 
   // Try to initialize!
@@ -57,12 +74,11 @@ void setup(){
   Serial.println("test");
   
 
-  Wire.begin();
+  //Wire.begin();
   //Wire.setSCL(PICO_I2C_SCL);
   //Wire.setSDA(PICO_I2C_SDA);
-  
-  accelgyro.initialize();
-  Serial.println(accelgyro.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
+  setSevenSeg(10);
+  setBuzzer(0);
 
 }
 
@@ -83,17 +99,7 @@ void loop(){
       intensity += 0.5;
       ghostEffects(ghost);
     }
-
-  accelgyro.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
-  //Serial.print("Current Location: ");
-  //Serial.println(getLocation());
-  Serial.print("a/g:\t");
-  Serial.print(ax); Serial.print("\t");
-  Serial.print(ay); Serial.print("\t");
-  Serial.print(az); Serial.print("\t");
-  Serial.print(gx); Serial.print("\t");
-  Serial.print(gy); Serial.print("\t");
-  Serial.println(gz);
+  Serial.println("hello world");
   delay(500);
   }
 
@@ -103,7 +109,6 @@ void loop(){
 void setSevenSeg(uint8_t i)
 {
   digitalWrite(sevseg, HIGH);
-  delay(10);
       mySerial.write(i);
   delay(10);
   digitalWrite(sevseg, LOW);
@@ -112,7 +117,6 @@ void setSevenSeg(uint8_t i)
 void setBuzzer(uint8_t i)
 {
   digitalWrite(buzzer, HIGH);
-  delay(10);
       mySerial.write(i);
   delay(10);
   digitalWrite(buzzer, LOW);
@@ -120,6 +124,7 @@ void setBuzzer(uint8_t i)
 
 void ghostEffects(Ghost ghost)
 {
+  
     return;
 }
 
