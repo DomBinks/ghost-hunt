@@ -1,0 +1,40 @@
+import pytest
+import socket
+from ghosts import *
+import time
+from flask import Flask, render_template, request
+
+app = Flask(__name__)
+first_name = ""
+last_name = ""
+name = ""
+age = ""
+occupation = ""
+gtype = ""
+backstory = ""
+code = 0
+location = ''
+activity = 0
+code = 0
+
+def test_index_page():
+    with app.test_client() as client:
+        response = client.get('/')
+        assert response.status_code == 200
+        assert b'index.html' in response.data
+
+def test_scan_page():
+    with app.test_client() as client:
+        response = client.get('/scan')
+        assert response.status_code == 200
+        assert b'scan.html' in response.data
+
+def test_capture():
+    with app.test_client() as client:
+        response = client.post('/capture', data={'Code': str(code)})
+        assert response.status_code == 200
+        assert b'captured.html' in response.data
+
+        response = client.post('/capture', data={'Code': '123'})
+        assert response.status_code == 200
+        assert b'scan.html' in response.data

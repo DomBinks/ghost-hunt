@@ -54,17 +54,6 @@ def parseString():
 
 
 if __name__ == '__main__':
-    #app.run(debug=True, port=8024)
-    ip = "192.168.115.59"
-    import time
-    conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    conn.connect((ip,80))
-    r = "{'Type': 'test','Name': 'Dom Bimkf', 'Location':'a', 'Activity': 100, 'Code':20}\r"
-    while(1):
-        conn.send(r.encode())
-        
-        time.sleep(0.2)
-        
-
-
+    app.run(debug=True, port=8024)
+    
     

@@ -26,41 +26,31 @@ function typeASCIIArt() {
   }, 3);
 }
 
-function sendCommand(command) {
-  href 
-}
-
-function doCommand() {
-  const command = commandLine.value;
-  const line = document.createElement('div');
-  line.innerHTML = 'ghost-hunter@terminal:~$ ' + command;
-  sendCommand(command);
-  output.appendChild(line);
-  commandLine.value = '';
-  
-  while (output.children.length > 23) {
-    output.removeChild(output.firstChild);
-  }
-  
-  const lines = output.querySelectorAll('div');
-  for (const line of lines) {
-    if (line.innerHTML.length > 120) {
-      line.innerHTML = line.innerHTML.substr(0, 120) + '...';
-    }
-  }
-}
-
 typeASCIIArt();
 
 const submitButton = document.querySelector('#submit');
 submitButton.addEventListener('click', () => {
   console.log('test');
-  doCommand();
+  doCommand(); 
 });
 
 commandLine.addEventListener('keydown', (event) => {
   if (event.key === 'Enter') {
-    doCommand();
-  }
+    const command = commandLine.value;
+    const line = document.createElement('div');
+    line.innerHTML = 'ghost-hunter@terminal:~$ ' + command;
+    output.appendChild(line);
+    commandLine.value = '';
+    
+    while (output.children.length > 23) {
+      output.removeChild(output.firstChild);
+    }
+    
+    const lines = output.querySelectorAll('div');
+    for (const line of lines) {
+      if (line.innerHTML.length > 120) {
+        line.innerHTML = line.innerHTML.substr(0, 120) + '...';
+      }
+    }  }
   
 });
